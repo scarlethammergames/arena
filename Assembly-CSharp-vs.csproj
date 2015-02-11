@@ -107,6 +107,10 @@
      <Compile Include="Assets\Scripts\supplyDepot\SupplyDepotBehaviour.cs" />
      <Compile Include="Assets\Scripts\supplyDepot\behaviour.cs" />
      <Compile Include="Assets\Scripts\supplyDepot\buildDepot.cs" />
+     <Compile Include="Assets\UI\Scripts\ButtonControl.cs" />
+     <Compile Include="Assets\UI\Scripts\MainMenu.cs" />
+     <Compile Include="Assets\UI\Scripts\MainMenu2.cs" />
+     <Compile Include="Assets\UI\Scripts\MenuManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
