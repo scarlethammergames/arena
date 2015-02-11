@@ -5,6 +5,14 @@ using UnityEditor;
 
 #endif
 
+/*
+ * TO SET UP ON A PLAYER:
+ * - drag the FreeLookCameraRig prefab onto the ThirdPersonCharacter object
+ * - there should now be a hierarchy attached that goes FreeLookCameraRig -> Pivot -> Main Camera
+ * - on the FreeLookCameraRig, drag this script onto it
+ * - should work now~~
+ * /
+
 namespace UnitySampleAssets.Cameras
 {
     public class FreeLookCamEdit : PivotBasedCameraRig
