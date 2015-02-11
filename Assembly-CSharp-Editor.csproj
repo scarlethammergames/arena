@@ -46,8 +46,32 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BlackfireStudio\Winter\Editor\Image Effects\FrostEditor.cs" />
      <Compile Include="Assets\Downloaded\SampleAssets\CrossPlatformInput\Scripts\Editor\CrossPlatformInputInitialize.cs" />
      <Compile Include="Assets\Downloaded\SampleAssets\CrossPlatformInput\Scripts\Editor\InputAxisScrollbarCI.cs" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Advanced Blend Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Full.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\SnowLighting.cginc" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Texture Blend Reflective.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Height Blend Reflective Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\SnowInputs.cginc" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\SnowSurface.cginc" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Texture Blend Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Image Effects\Shaders\Frost.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Advanced Blend.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Full Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Forward\Snow.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Height Blend.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Texture Blend.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Advanced Blend Reflective Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Advanced Blend Reflective.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Forward\Snow Blend.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\SnowCore.cginc" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Height Blend Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Full Reflective Glitter.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Height Blend Reflective.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Full Reflective.shader" />
+     <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Texture Blend Reflective Glitter.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
