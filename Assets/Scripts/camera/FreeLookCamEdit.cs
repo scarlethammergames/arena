@@ -11,7 +11,7 @@ using UnityEditor;
  * - there should now be a hierarchy attached that goes FreeLookCameraRig -> Pivot -> Main Camera
  * - on the FreeLookCameraRig, drag this script onto it
  * - should work now~~
- * /
+ */
 
 namespace UnitySampleAssets.Cameras
 {
