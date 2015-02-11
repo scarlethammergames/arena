@@ -103,6 +103,7 @@
      <Compile Include="Assets\Scripts\attachment\lookAt.cs" />
      <Compile Include="Assets\Scripts\attacks\fireProjectile.cs" />
      <Compile Include="Assets\Scripts\attacks\projectile.cs" />
+     <Compile Include="Assets\Scripts\camera\scripts\FreeLookCamEdit.cs" />
      <Compile Include="Assets\Scripts\physics\ForceConditions.cs" />
      <Compile Include="Assets\Scripts\physics\ForceOnCollision.cs" />
      <Compile Include="Assets\Scripts\status\TimedLifespan.cs" />

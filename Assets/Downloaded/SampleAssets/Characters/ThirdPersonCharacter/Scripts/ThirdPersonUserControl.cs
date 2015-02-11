@@ -56,7 +56,7 @@ namespace UnitySampleAssets.Characters.ThirdPerson
             bool crouch = false;
 
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = CrossPlatformInputManager.GetAxis("Vertical");
+			float v = CrossPlatformInputManager.GetAxis("Vertical");
             crouch = Input.GetKey(KeyCode.C);
 
             // calculate move direction to pass to character
