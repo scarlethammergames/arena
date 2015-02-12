@@ -73,7 +73,7 @@
      <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Full Reflective.shader" />
      <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Texture Blend Reflective Glitter.shader" />
  <Reference Include="Assembly-UnityScript">
- <HintPath>C:/Users/Admin/Desktop/Ubisoft Competition/arena/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
+ <HintPath>C:/Users/Monica/Documents/GitHub/arena/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>

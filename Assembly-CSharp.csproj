@@ -104,6 +104,7 @@
      <Compile Include="Assets\Scripts\attacks\fireProjectile.cs" />
      <Compile Include="Assets\Scripts\attacks\projectile.cs" />
      <Compile Include="Assets\Scripts\camera\FreeLookCamEdit.cs" />
+     <Compile Include="Assets\Scripts\physics\CollisionForce.cs" />
      <Compile Include="Assets\Scripts\physics\ForceConditions.cs" />
      <Compile Include="Assets\Scripts\physics\ForceOnCollision.cs" />
      <Compile Include="Assets\Scripts\status\TimedLifespan.cs" />
@@ -114,6 +115,7 @@
      <Compile Include="Assets\UI\Scripts\MainMenu.cs" />
      <Compile Include="Assets\UI\Scripts\MainMenu2.cs" />
      <Compile Include="Assets\UI\Scripts\MenuManager.cs" />
+     <Compile Include="Assets\UI\Scripts\PauseScreen.cs" />
      <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Advanced Blend Glitter.shader" />
      <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\Snow Full.shader" />
      <None Include="Assets\BlackfireStudio\Winter\Shaders\Snow\SnowLighting.cginc" />

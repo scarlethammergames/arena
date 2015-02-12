@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
+	public string onPlayGameScene;
 	public MainMenu2 CurrentMenu;
 
 	public void Start() {
@@ -16,8 +17,8 @@ public class MenuManager : MonoBehaviour {
 		CurrentMenu = menu;
 		CurrentMenu.IsOpen = true;
 	}
-	public void PlayGame(string sceneName) {
-		Application.LoadLevel (sceneName);
+	public void PlayGame() {
+		Application.LoadLevel (onPlayGameScene);
 	}
 	public void QuitGame() {
 		Application.Quit();

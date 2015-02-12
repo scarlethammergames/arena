@@ -3,12 +3,14 @@ using System.Collections;
 
 public class behaviour : MonoBehaviour {
 
+	public string supplyDepotTag;
+	public string supplyItemTag;
 	private SupplyDepotBehaviour sdB;
 	//private Canvas canvas;
 
 	void Start(){
 
-		sdB = GameObject.FindWithTag ("SupplyDepot").GetComponent<SupplyDepotBehaviour>().getInstance ();
+		sdB = GameObject.FindWithTag (supplyDepotTag).GetComponent<SupplyDepotBehaviour>().getInstance ();
 		//canvas = sdB.GetComponent<Canvas> ();
 		//tempObj = sdB.getInstance ();
 		
@@ -22,7 +24,7 @@ public class behaviour : MonoBehaviour {
 		 * 
 		 *
 		 */
-		if(other.tag == "EnviroTile"){
+		if(other.tag == supplyItemTag){
 		
 			sdB.updateSize (100);
 			this.transform.parent.transform.localScale += (Vector3.up * 0.1f);
