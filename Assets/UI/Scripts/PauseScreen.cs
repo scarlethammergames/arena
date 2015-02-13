@@ -1,21 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PauseScreen : MonoBehaviour {
 
 	public GameObject pauseMenu;
 	private bool isActive;
+	public GameObject eventSystemObject;
+	public GameObject firstSelectedObject;
+	private EventSystem eventSystem;
 
 	// Use this for initialization
 	void Start () {
 		isActive = false;
 		pauseMenu.SetActive (isActive);
+		Time.timeScale = 1;
+		eventSystem = eventSystemObject.GetComponent<EventSystem> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7"))
 		{
+			Debug.Log ("Default first selected:" + eventSystem.firstSelectedGameObject);
+			Debug.Log ("My first selected:" + firstSelectedObject);
+			eventSystem.SetSelectedGameObject(firstSelectedObject);
 			isActive = !isActive;
 
 			//Stop animations
