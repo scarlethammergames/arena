@@ -32,6 +32,7 @@ public class RoamerMover : MonoBehaviour {
 	{
 
 		target = newPosition;
+
 				
 	}
 
@@ -39,6 +40,7 @@ public class RoamerMover : MonoBehaviour {
 	{
 		foundPlayer = true;
 		target = newPosition;
+		gameObject.renderer.material.color = Color.red;
 
 	}
 	
