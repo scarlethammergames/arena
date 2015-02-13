@@ -63,7 +63,7 @@ public class ForceOnCollision: MonoBehaviour {
 				case ForceType.Pull:
 					if( fc.canPull() ){
 						Vector3 direction = Vector3.Normalize( this.transform.position - other.transform.position );
-						other.rigidbody.AddForce( direction * Mathf.Clamp(_currentMagnitude/Vector3.SqrMagnitude(this.transform.position - other.transform.position), 0, _maxMagnitude) , ForceMode.Impulse);
+						other.rigidbody.AddForce( direction * Mathf.Clamp(_currentMagnitude/Vector3.Magnitude(this.transform.position - other.transform.position), 0, _maxMagnitude) , ForceMode.Impulse);
 					}		
 					break;
 				case ForceType.Lift:
