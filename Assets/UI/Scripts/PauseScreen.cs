@@ -10,6 +10,7 @@ public class PauseScreen : MonoBehaviour {
 	void Start () {
 		isActive = false;
 		pauseMenu.SetActive (isActive);
+		Time.timeScale = 1;
 	}
 	
 	// Update is called once per frame
