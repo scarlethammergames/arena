@@ -40,17 +40,34 @@ public class SnifferMover : MonoBehaviour {
 
 		}
 
-        if (target) {
-            agent.SetDestination(target.position);
-        }
+       
+        agent.SetDestination(target.position);
+        
 	}
 
-	public void setTarget(Transform chaseTarget)
+	public void setTarget(Transform chaseTarget, bool isPlayer)
 	{
 
 		foundTarget = true;
 		target = chaseTarget;
 
+		if(isPlayer){
+			gameObject.renderer.material.color = Color.red;
+		}
+
+	}
+
+	
+	IEnumerator turnsGreen()
+	{
+
+		gameObject.renderer.material.color = Color.green;
+		
+		yield return new WaitForSeconds(0.5f);
+
+		gameObject.renderer.material.color = Color.yellow;
+
+		
 	}
 
 
@@ -72,7 +89,7 @@ public class SnifferMover : MonoBehaviour {
 
 		if(objectHit.Equals ("EnviroTile"))
 		{
-
+			StartCoroutine(turnsGreen());
 			Debug.Log ("NomNomNom");
 			Destroy(other.gameObject);
 			foundTarget = false;

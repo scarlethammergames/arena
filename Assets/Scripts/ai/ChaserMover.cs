@@ -38,9 +38,21 @@ public class ChaserMover : MonoBehaviour {
 
 		foundTarget = true;
 		target = chaseTarget;
+		gameObject.renderer.material.color = Color.red;
 
 	}
 
+	IEnumerator turnsGreen()
+	{
+		
+		gameObject.renderer.material.color = Color.green;
+		
+		yield return new WaitForSeconds(0.5f);
+		
+		gameObject.renderer.material.color = Color.yellow;
+		
+		
+	}
 
 	void OnCollisionEnter(Collision other)
 	{
@@ -59,7 +71,7 @@ public class ChaserMover : MonoBehaviour {
 
 		if(objectHit.Equals ("EnviroTile"))
 		{
-
+			StartCoroutine(turnsGreen ());
 			Debug.Log ("NomNomNom");
 			Destroy(other.gameObject);
 			foundTarget = false;
