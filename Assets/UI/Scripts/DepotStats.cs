@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class DepotStats : MonoBehaviour {
 
 	public GameObject mainSupplyDepot; 
-	private SupplyDepotBehaviour supplyDepotBehaviour;
+	private depotAbsorb supplyDepotBehaviour;
 	private Text stats;
 
 	// Use this for initialization
 	void Start () {
-		supplyDepotBehaviour = mainSupplyDepot.GetComponent<SupplyDepotBehaviour> ();
+		supplyDepotBehaviour = mainSupplyDepot.GetComponent<depotAbsorb> ();
 		stats = this.GetComponent<Text> ();
 	}
 	
