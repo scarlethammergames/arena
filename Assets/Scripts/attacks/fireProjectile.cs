@@ -35,11 +35,7 @@ public class fireProjectile: MonoBehaviour {
 	void Fire(){
 		GameObject clone;
 		clone = Instantiate( projectile, transform.position + offset, transform.rotation ) as GameObject;
-		//clone.rigidbody.velocity = transform.TransformDirection( trajectory * magnitude );
-
-        Vector3 cam_forward = GameObject.FindGameObjectWithTag("MainCamera").transform.forward;
-        clone.rigidbody.AddForce( new Vector3(cam_forward.x * magnitude, 0, cam_forward.z * magnitude) );
-
+		clone.rigidbody.velocity = transform.TransformDirection( trajectory * magnitude );
 		if( makeChild ){
 			clone.transform.parent = this.transform;
 		}
