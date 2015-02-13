@@ -39,8 +39,9 @@ public class SnifferMover : MonoBehaviour {
 
 		}
 
-		agent.SetDestination(target.position);
-	
+        if (target) {
+            agent.SetDestination(target.position);
+        }
 	}
 
 	public void setTarget(Transform chaseTarget)
