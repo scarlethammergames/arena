@@ -2,48 +2,54 @@
 using System.Collections;
 
 public class SupplyDepotBehaviour : MonoBehaviour {
-
-	private int maxSize;
-	private int currentSize;
-
+	
+	public int maxSize=10;
+	public int currentSize=0;
+	public GameObject gameManager;
+	private InGameStats gameStats;
+	private bool depotFull;
+	
 	// Use this for initialization
 	void Start () {
-
-		maxSize = 5000;
-		currentSize = 0;
-	
+		gameStats = gameManager.GetComponent<InGameStats> ();
+		depotFull = false;
 	}
-
-
-
+	
+	
+	
 	public SupplyDepotBehaviour getInstance() {
-
+		
 		return this;
 
 	}
-
-	int getSize(){
-
+	
+	public int getSize(){
+		
 		return this.maxSize;
-
+		
 	}
-
-	internal void updateSize(int item){
-
-		if ((this.currentSize + item) < 5000) {
+	public int getCurrentSize() {
+		return this.currentSize;
+	}
+	
+	public void updateSize(int item){
+		
+		if ((this.currentSize + item) <= maxSize) {
 			this.currentSize += item;
-		}else{
+		}else if (!depotFull && this.currentSize>=maxSize){
 			Debug.Log ("Resource Depot FuLL");
+			gameStats.depotFull();
+			depotFull = true;
 		}
-
-
+		
+		
 	}
-
-
+	
+	
 	// Update is called once per frame
 	void Update () {
-
-//		Debug.Log (currentSize);
-	
+		
+		//		Debug.Log (currentSize);
+		
 	}
 }

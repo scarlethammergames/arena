@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ChaserMover : MonoBehaviour {
 
+	public int attackStrength = 10;
 	private NavMeshAgent agent;
 	private string objectHit;
 	private bool foundTarget;
@@ -51,9 +52,9 @@ public class ChaserMover : MonoBehaviour {
 		{
 
 			Debug.Log ("Hit");
-			//TODO
 			//Damage the player by taking health away from him/her
-
+			PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+			playerHealth.decreaseHealth(attackStrength);
 		}
 
 		if(objectHit.Equals ("EnviroTile"))

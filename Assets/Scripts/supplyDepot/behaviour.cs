@@ -26,7 +26,7 @@ public class behaviour : MonoBehaviour {
 		 */
 		if(other.tag == supplyItemTag){
 		
-			sdB.updateSize (100);
+			sdB.updateSize (1);
 			this.transform.parent.transform.localScale += (Vector3.up * 0.1f);
 			Destroy( other.gameObject );
 		

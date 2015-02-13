@@ -4,19 +4,22 @@ using System.Collections;
 public class PauseScreen : MonoBehaviour {
 
 	public GameObject pauseMenu;
-	private bool isEnabled;
+	private bool isActive;
 
 	// Use this for initialization
 	void Start () {
-		isEnabled = false;
+		isActive = false;
+		pauseMenu.SetActive (isActive);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7"))
 		{
+			isActive = !isActive;
+
 			//Stop animations
-			if (Time.timeScale == 1)
+			if (isActive)
 			{
 				Time.timeScale = 0;
 			}
@@ -24,9 +27,8 @@ public class PauseScreen : MonoBehaviour {
 			{
 				Time.timeScale = 1;
 			}
-			//Hide/display pause menu
-			isEnabled = !isEnabled;
-			pauseMenu.SetActive(isEnabled);
+			pauseMenu.SetActive(isActive);
+
 		}
 	}
 }
