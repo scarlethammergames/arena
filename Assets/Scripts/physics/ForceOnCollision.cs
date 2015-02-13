@@ -34,47 +34,6 @@ public class ForceOnCollision: MonoBehaviour {
 			_duration--;
 			_currentRadius = Mathf.Lerp( _magnitudeBirth, _magnitudeDeath, _radiusRatio * Time.deltaTime );
 			_currentMagnitude = Mathf.Lerp( _radiusBirth, _radiusDeath, _radiusRatio * Time.deltaTime );
-			ForceSphere( _currentRadius, _currentMagnitude, _forceType );
-		}
-	}
-
-	/// <summary>
-	/// Apply a force to any object with a collider that exists within the sphere.
-	/// Object to be affected must be in the "PushPull" layer.
-	/// </summary>
-	/// <param name="radius">Radius of influence.</param>
-	/// <param name="magnitude">Magnitude of pulling force.</param>
-	/// <param name="forceType">Type of force affects the direction force is applied.</param>
-	void ForceSphere( float radius, float magnitude, ForceType forceType )
-	{
-		Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, radius);
-		foreach (Collider hit in hitColliders)
-		{
-			if (hit && hit.rigidbody){
-				ForceConditions fc = (ForceConditions) hit.GetComponent(typeof(ForceConditions));
-				if( fc ){
-					switch( forceType ){
-					case ForceType.Push:
-						if( fc.canPush() ){
-							Vector3 direction = Vector3.Normalize( hit.transform.position - this.transform.position );
-							hit.rigidbody.AddForce( direction * Mathf.Clamp(magnitude/Vector3.Magnitude(  hit.transform.position - this.transform.position ), 0, _maxMagnitude) , ForceMode.Impulse);
-							hit.GetComponent<ForceConditions>().setPullable(true);
-						}				
-						break;
-					case ForceType.Pull:
-						if( fc.canPull() ){
-							Vector3 direction = Vector3.Normalize( this.transform.position - hit.transform.position );
-							hit.rigidbody.AddForce( direction * Mathf.Clamp(magnitude/Vector3.Magnitude(this.transform.position - hit.transform.position), 0, _maxMagnitude) , ForceMode.Impulse);
-						}		
-						break;
-					case ForceType.Lift:
-						if( fc.canPush() ){
-							hit.rigidbody.AddForce( Vector3.up * Mathf.Clamp(magnitude/Vector3.Magnitude(this.transform.position - hit.transform.position), 0, _maxMagnitude) , ForceMode.Impulse);
-						}
-						break;
-					}
-				}
-			}
 		}
 	}
 
@@ -86,6 +45,34 @@ public class ForceOnCollision: MonoBehaviour {
 		if(debug){
 			Gizmos.color = Color.yellow;
 			Gizmos.DrawSphere(transform.position, _currentRadius);
+		}
+	}
+
+	void OnTriggerStay(Collider other){
+		if (other.attachedRigidbody){
+			ForceConditions fc = (ForceConditions) other.GetComponent(typeof(ForceConditions));
+			if( fc ){
+				switch( _forceType ){
+				case ForceType.Push:
+					if( fc.canPush() ){
+						Vector3 direction = Vector3.Normalize( other.transform.position - this.transform.position );
+						other.attachedRigidbody.AddForce( direction * Mathf.Clamp(_currentMagnitude/Vector3.SqrMagnitude(  other.transform.position - this.transform.position ), 0, _maxMagnitude) , ForceMode.Impulse);
+						other.GetComponent<ForceConditions>().setPullable(true);
+					}				
+					break;
+				case ForceType.Pull:
+					if( fc.canPull() ){
+						Vector3 direction = Vector3.Normalize( this.transform.position - other.transform.position );
+						other.rigidbody.AddForce( direction * Mathf.Clamp(_currentMagnitude/Vector3.SqrMagnitude(this.transform.position - other.transform.position), 0, _maxMagnitude) , ForceMode.Impulse);
+					}		
+					break;
+				case ForceType.Lift:
+					if( fc.canPush() ){
+						other.rigidbody.AddForce( Vector3.up * Mathf.Clamp(_currentMagnitude/Vector3.Magnitude(this.transform.position - other.transform.position), 0, _maxMagnitude) , ForceMode.Impulse);
+					}
+					break;
+				}
+			}
 		}
 	}
 }
