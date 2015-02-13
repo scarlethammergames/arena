@@ -6,6 +6,10 @@ public class MainMenu2 : MonoBehaviour {
 	private Animator _animator;
 	private CanvasGroup _canvasGroup;
 
+	void Start() {
+		Time.timeScale = 1;
+	}
+
 	public bool IsOpen {
 		get { return _animator.GetBool ("IsOpen"); }
 		set { _animator.SetBool ("IsOpen", value); }
@@ -17,7 +21,7 @@ public class MainMenu2 : MonoBehaviour {
 
 		//Moves menu to center of the screen when game is playing
 		var rect = GetComponent<RectTransform> ();
-		rect.offsetMax = rect.offsetMin = new Vector2 (0, 0);
+		rect.offsetMax = rect.offsetMin = new Vector2 (0,0);
 	}
 	public void Update() {
 
