@@ -22,8 +22,6 @@ public class PauseScreen : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7"))
 		{
-			Debug.Log ("Default first selected:" + eventSystem.firstSelectedGameObject);
-			Debug.Log ("My first selected:" + firstSelectedObject);
 			eventSystem.SetSelectedGameObject(firstSelectedObject);
 			isActive = !isActive;
 
