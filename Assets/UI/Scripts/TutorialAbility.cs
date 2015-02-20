@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GamepadInput;
 
 public class TutorialAbility : MonoBehaviour {
 
-	public string inputName = "P1_Fire1";
+	public string inputName;
 	public GameObject gameManager;
 	private TutorialManager tutManager;
 
@@ -12,8 +13,14 @@ public class TutorialAbility : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetButtonDown (inputName)) {
-			tutManager.NextTutorial();
+		if (inputName == "left") {
+			if (GamePad.GetTrigger (GamePad.Trigger.LeftTrigger, GamePad.Index.One) > 0.20f) {
+				tutManager.NextTutorial ();
+			}
+		} else if (inputName == "right") {
+			if (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, GamePad.Index.One) > 0.20f) {
+				tutManager.NextTutorial ();
+			}
 		}
 	}
 }
