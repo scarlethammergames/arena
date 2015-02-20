@@ -51,6 +51,8 @@ public class DeftPlayerController : MonoBehaviour
 
   Animator animator;
 
+	bool isAiming = false;
+
   void Awake()
   {
     animator = this.GetComponent<Animator>();
@@ -98,9 +100,40 @@ public class DeftPlayerController : MonoBehaviour
 			
 			invert_timer = 0;
 		}
+		this.controller_move_direction = new Vector3 (0, 0, 0);
+		this.controller_look_direction = new Vector3 (0, 0, 0);
+		if (use_gamepad)
+		{
+			this.controller_move_direction = GamePad.GetAxis(GamePad.Axis.LeftStick, pad_index);
+			this.controller_look_direction = GamePad.GetAxis(GamePad.Axis.RightStick, pad_index);
+		}
+		else
+		{
+			this.controller_move_direction = new Vector2(Input.GetAxis("Horizontal"), -Input.GetAxis("Vertical"));
+			this.controller_look_direction = new Vector2(Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1), Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1));
+		}
+		
+		
+		if(GamePad.GetButtonDown(GamePad.Button.X, pad_index)){
+			if(isAiming)
+				isAiming = false;
+			else
+				isAiming = true;
+		}
+		
+		if(isAiming && (this.controller_move_direction.x > 0 || this.controller_move_direction.y > 0)){
+			isAiming = false;
+		}	
+		
+		if (!isAiming) {
+			Camera.main.GetComponent<Crosshair>().enabled = false;
+		}
+		
+		if (isAiming) {
+						Camera.main.GetComponent<Crosshair> ().enabled = true;
+				}
 
-
-    if (controller_aim > 0.20f)
+    if (isAiming)
     {
       this.state = PlayerState.aiming;
     }
@@ -119,18 +152,6 @@ public class DeftPlayerController : MonoBehaviour
     else
     {
       this.state = PlayerState.walking;
-    }
-		this.controller_move_direction = new Vector3 (0, 0, 0);
-		this.controller_look_direction = new Vector3 (0, 0, 0);
-    if (use_gamepad)
-    {
-      this.controller_move_direction = GamePad.GetAxis(GamePad.Axis.LeftStick, pad_index);
-      this.controller_look_direction = GamePad.GetAxis(GamePad.Axis.RightStick, pad_index);
-    }
-    else
-    {
-      this.controller_move_direction = new Vector2(Input.GetAxis("Horizontal"), -Input.GetAxis("Vertical"));
-      this.controller_look_direction = new Vector2(Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1), Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1));
     }
 	
 	if (inverted)
