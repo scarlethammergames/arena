@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using GamepadInput;
 
 /**
 * Spawn a rigid body GameObject with an initial velocity when triggered. 
@@ -14,28 +15,56 @@ public class fireProjectile: MonoBehaviour {
 	public float magnitude = 50;
 	public float drag = 5;
 	public bool makeChild = false;
-
+	
+	Vector3 forward;
+	float shoot_timer = 0;
+	
 	public string inputName = "Fire1";
-
-//	public enum TrajectoryType {Straight, Lob, Drop, Attach};
-//	public TrajectoryType style = TrajectoryType.Straight;
-
+	//public bool isProjectile = true;
+	//public bool isBomb = false;
+	GamePad.Index pad_index = GamePad.Index.One;
+	
+	//	public enum TrajectoryType {Straight, Lob, Drop, Attach};
+	//	public TrajectoryType style = TrajectoryType.Straight;
+	
 	// Use this for initialization
 	void Start () {
-
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		shoot_timer += Time.deltaTime;
 		if ( Input.GetButtonDown( inputName ) ){
-			Fire();
+			Fire ();
+			shoot_timer = 0;
 		}
+		/*
+		if (shoot_timer > 0.2f) {
+			if (isProjectile) {
+				if (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, pad_index) > 0.20f) {
+					Fire ();
+					shoot_timer = 0;
+				}
+			} else {
+				if (GamePad.GetTrigger (GamePad.Trigger.LeftTrigger, pad_index) > 0.20f) {
+					Fire ();
+					shoot_timer = 0;
+				}
+			}
+		}
+		*/
 	}
-
+	
 	void Fire(){
 		GameObject clone;
 		clone = Instantiate( projectile, transform.position + offset, transform.rotation ) as GameObject;
-		clone.rigidbody.velocity = transform.TransformDirection( trajectory * magnitude );
+		//clone.rigidbody.velocity = transform.TransformDirection( trajectory * magnitude );
+		
+		forward = Camera.main.transform.TransformDirection(Vector3.forward);
+		forward = forward.normalized;
+		clone.rigidbody.velocity = (new Vector3(forward.x * magnitude,0,forward.z * magnitude));
+		
 		if( makeChild ){
 			clone.transform.parent = this.transform;
 		}
