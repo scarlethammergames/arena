@@ -19,8 +19,8 @@ public class fireProjectile: MonoBehaviour {
 	Vector3 forward;
 	float shoot_timer = 0;
 	
-	public string inputName = "Fire1";
-	//public bool isProjectile = true;
+	//public string inputName = "Fire1";
+	public bool isProjectile = true;
 	//public bool isBomb = false;
 	GamePad.Index pad_index = GamePad.Index.One;
 	
@@ -35,11 +35,11 @@ public class fireProjectile: MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		shoot_timer += Time.deltaTime;
-		if ( Input.GetButtonDown( inputName ) ){
+		/*if ( Input.GetButtonDown( inputName ) ){
 			Fire ();
 			shoot_timer = 0;
-		}
-		/*
+		}*/
+
 		if (shoot_timer > 0.2f) {
 			if (isProjectile) {
 				if (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, pad_index) > 0.20f) {
@@ -53,7 +53,7 @@ public class fireProjectile: MonoBehaviour {
 				}
 			}
 		}
-		*/
+
 	}
 	
 	void Fire(){
