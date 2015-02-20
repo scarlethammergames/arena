@@ -14,12 +14,12 @@ public class TextFollow : MonoBehaviour {
 	void Start () {
 		camera = Camera.main;
 		text = gameObject.GetComponent<Text>();
+		text.enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Vector3 viewport = camera.WorldToViewportPoint (followObject.transform.position + offset);
-		Debug.Log (viewport);
 		//If object is less than a certain distance, show its text
 		if (viewport.z < viewDepth && viewport.x >=0 && viewport.y>=0 && viewport.z>=0) {
 			transform.position = new Vector3 (viewport.x * Screen.width, viewport.y * Screen.height, 0f);

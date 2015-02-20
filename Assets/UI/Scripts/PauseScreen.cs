@@ -22,9 +22,9 @@ public class PauseScreen : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7"))
 		{
-			eventSystem.SetSelectedGameObject(firstSelectedObject);
 			isActive = !isActive;
 
+			
 			//Stop animations
 			if (isActive)
 			{
@@ -35,7 +35,7 @@ public class PauseScreen : MonoBehaviour {
 				Time.timeScale = 1;
 			}
 			pauseMenu.SetActive(isActive);
-
+			if (isActive) eventSystem.SetSelectedGameObject(firstSelectedObject);
 		}
 	}
 }
