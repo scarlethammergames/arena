@@ -17,7 +17,7 @@ public class fireProjectile: MonoBehaviour {
 	public bool makeChild = false;
 	
 	Vector3 forward;
-	float shoot_timer = 0;
+	float shoot_timer = 3;
 	
 	//public string inputName = "Fire1";
 	public bool isProjectile = true;
@@ -40,7 +40,7 @@ public class fireProjectile: MonoBehaviour {
 			shoot_timer = 0;
 		}*/
 
-		if (shoot_timer > 0.2f) {
+		if (shoot_timer > 1.1f) {
 			if (isProjectile) {
 				if (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, pad_index) > 0.20f) {
 					Fire ();

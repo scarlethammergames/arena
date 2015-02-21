@@ -121,9 +121,9 @@ public class DeftPlayerController : MonoBehaviour
 				isAiming = true;
 		}
 		
-		if(isAiming && (this.controller_move_direction.x > 0 || this.controller_move_direction.y > 0)){
+		/*if(isAiming && (this.controller_move_direction.x > 0 || this.controller_move_direction.y > 0)){
 			isAiming = false;
-		}	
+		}	*/
 		
 		if (!isAiming) {
 			Camera.main.GetComponent<Crosshair>().enabled = false;
