@@ -2,7 +2,7 @@
 using System.Collections;
 using GamepadInput;
 
-public class BlitzAnimCtrl : MonoBehaviour {
+public class CharAnimCtrl : MonoBehaviour {
 	protected Animator anim;
 
 	// Use this for initialization
