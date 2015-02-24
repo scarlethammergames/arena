@@ -7,6 +7,7 @@ public class depotAbsorb : MonoBehaviour {
 	public int capacity = 5000;
 	public int resourceVal = 100;
 	public int currentStock = 0;
+	public float animGrowRate = 0.1f;
 	//Link to game manager to update stats
 	public GameObject gameManager;
 	private InGameStats gameStats;
@@ -45,7 +46,7 @@ public class depotAbsorb : MonoBehaviour {
 				this.currentStock += resourceVal;
 				myAnim.SetBool("isPlaying", true);
 				myAnim.SetBool("isStopped", false);
-				myAnim.Play("depotGrow", 0, myAnim.GetCurrentAnimatorStateInfo(0).length * currentStock/capacity);
+				myAnim.Play("depotGrow", 0, myAnim.GetCurrentAnimatorStateInfo(0).length * currentStock/capacity * animGrowRate);
 			}else if (!depotFull) {
 				Debug.Log ("Resource Depot FuLL");
 				gameStats.depotFull();
