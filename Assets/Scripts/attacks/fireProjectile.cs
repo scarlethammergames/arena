@@ -17,8 +17,10 @@ public class fireProjectile: MonoBehaviour {
 	public bool makeChild = false;
 	
 	Vector3 forward;
-	float shoot_timer = 3;
-	
+	public float cooldown = 3;
+	float cooldownTimer;
+	float triggerThreshold = 0.20f;
+
 	//public string inputName = "Fire1";
 	public bool isProjectile = true;
 	//public bool isBomb = false;
@@ -29,27 +31,27 @@ public class fireProjectile: MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		
+		cooldownTimer = cooldown;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		shoot_timer += Time.deltaTime;
+		cooldownTimer -= Time.deltaTime;
 		/*if ( Input.GetButtonDown( inputName ) ){
 			Fire ();
-			shoot_timer = 0;
+			cooldown = 0;
 		}*/
 
-		if (shoot_timer > 1.1f) {
+		if (cooldownTimer <= 0.0f) {
 			if (isProjectile) {
-				if (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, pad_index) > 0.20f) {
+				if (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, pad_index) > triggerThreshold) {
 					Fire ();
-					shoot_timer = 0;
+					cooldownTimer = cooldown;
 				}
 			} else {
-				if (GamePad.GetTrigger (GamePad.Trigger.LeftTrigger, pad_index) > 0.20f) {
+				if (GamePad.GetTrigger (GamePad.Trigger.LeftTrigger, pad_index) > triggerThreshold) {
 					Fire ();
-					shoot_timer = 0;
+					cooldownTimer = cooldown;
 				}
 			}
 		}
