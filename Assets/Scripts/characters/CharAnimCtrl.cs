@@ -13,7 +13,6 @@ public class CharAnimCtrl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (anim);
 		//Tutorial: http://unity3d.com/learn/tutorials/modules/beginner/animation/animator-scripting
 		if(anim)
 		{
