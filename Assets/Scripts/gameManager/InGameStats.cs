@@ -9,8 +9,9 @@ public class InGameStats : MonoBehaviour {
 	public GameObject gameOverWindow;
 	public GameObject winText;
 	public GameObject loseText;
-	public int depotsFull=0;
-	public int totalDepots=1;
+	public GameObject depotB;
+	private int depotsFull;
+	
 	private EventSystem eventSystem;
 
 	void Start() {
@@ -18,17 +19,24 @@ public class InGameStats : MonoBehaviour {
 		winText.SetActive (false);
 		loseText.SetActive (false);
 		eventSystem = eventSystemObject.GetComponent<EventSystem> ();
+		depotsFull = 0;
+		depotB.SetActive(false);
 	}
-
 	public void depotFull() {
-		Debug.Log ("game manager called");
 		depotsFull++;
-		if (depotsFull == totalDepots) {
-			Debug.Log ("YOU WIN.");
-			gameOverWindow.SetActive (true);
-			winText.SetActive (true);
-			eventSystem.SetSelectedGameObject(gameOverFirstSelected);
+		if (depotsFull == 2) {
+			depotBFull ();
+		} else {
+			//Activate second depot
+			Debug.Log ("Depot A FULL");
+			depotB.SetActive(true);
 		}
+	}
+	public void depotBFull() {
+		Debug.Log ("YOU WIN.");
+		gameOverWindow.SetActive (true);
+		winText.SetActive (true);
+		eventSystem.SetSelectedGameObject(gameOverFirstSelected);
 	}
 	public void playerDied() {
 		Debug.Log ("YOU DIED.");
