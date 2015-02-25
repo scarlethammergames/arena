@@ -129,12 +129,9 @@ public class DeftPlayerController : MonoBehaviour
 			Camera.main.GetComponent<Crosshair>().enabled = false;
 		}
 		
-		if (isAiming) {
-			Camera.main.GetComponent<Crosshair> ().enabled = true;
-		}
-		
 		if (isAiming)
 		{
+			Camera.main.GetComponent<Crosshair> ().enabled = true;
 			this.state = PlayerState.aiming;
 		}
 		else if (controller_jump)

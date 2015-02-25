@@ -19,6 +19,7 @@ public class TutorialManager : MonoBehaviour {
 		//Start first tutorial panel
 		tutorials[0].SetActive (true);
 		eventSystem.SetSelectedGameObject(tutorialStartButton);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<DeftPlayerController>().enabled = false;
 	}
 	public void NextTutorial() {
 		//Disable current menu and remove it from list
@@ -39,5 +40,6 @@ public class TutorialManager : MonoBehaviour {
 	}
 	public void ExitTutorial() {
 		tutorials[0].SetActive (false);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<DeftPlayerController>().enabled = true;
 	}
 }
