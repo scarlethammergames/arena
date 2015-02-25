@@ -14,7 +14,7 @@ public class HealthBar : MonoBehaviour {
 		healthbar = GetComponent<Image> ();
 		RectTransform healthRect = GetComponent<RectTransform> ();
 		healthRect.sizeDelta = new Vector2 (Screen.width*0.3f, Screen.height*0.04f);
-		healthRect.anchoredPosition = new Vector2 (Screen.width*0.05f, -Screen.height*0.05f);
+		healthRect.anchoredPosition = new Vector2 (Screen.width*0.08f, -Screen.height*0.05f);
 		//Grab player
 		player1Health = player1.GetComponent<PlayerHealth> ();
 	}
