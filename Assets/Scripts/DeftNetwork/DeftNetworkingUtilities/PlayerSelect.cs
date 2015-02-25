@@ -9,8 +9,6 @@ public class PlayerSelect : MonoBehaviour
 
   public GameObject playerTypeA;
   public GameObject playerTypeB;
-  public GameObject playerTypeC;
-  public GameObject playerTypeD;
 
   private GameObject[] selectablePlayers;
   public GameObject selectedPlayer = null;
@@ -27,7 +25,7 @@ public class PlayerSelect : MonoBehaviour
   // Use this for initialization
   void Start()
   {
-    selectablePlayers = new GameObject[] { playerTypeA, playerTypeB, playerTypeC, playerTypeD };
+    selectablePlayers = new GameObject[] { playerTypeA, playerTypeB };
     this.enabled = false;
   }
 
