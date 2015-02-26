@@ -4,11 +4,13 @@ using GamepadInput;
 
 public class CharAnimCtrl : MonoBehaviour {
 	protected Animator anim;
+	DeftPlayerController _controller;
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
 		anim.SetBool("isIdle", true);
+		_controller = GameObject.FindGameObjectWithTag("Player").GetComponent<DeftPlayerController>();
 	}
 	
 	// Update is called once per frame
@@ -17,7 +19,7 @@ public class CharAnimCtrl : MonoBehaviour {
 		if(anim)
 		{
 			Vector2 move = GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One);
-			if(move.x != 0 || move.y != 0){
+			if(_controller.enabled && (move.x != 0 || move.y != 0)){
 				anim.SetBool("isIdle", false);
 				anim.SetBool("isRunning", true);
 			}

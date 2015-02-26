@@ -12,76 +12,115 @@ public enum ProjectileTriggerButton { LEFT, RIGHT }
 * Constraints: The projectile must contain a rigid body.
 */
 public class fireProjectile: MonoBehaviour {
+	//Launch properties
 	public GameObject _projectile;
 	public Vector3 _offset;
 	public Vector3 _trajectory = Vector3.forward;
 	public float _magnitude = 50;
 	public float _drag = 5;
 	public bool _makeChild = false;
-
-	Vector3 forward;
-	public float _cooldown = 3;
-	float _cooldownTimer;
-	float _triggerThreshold = 0.20f;
-
-	public bool _isControllable = false;
-	bool _leftTriggerHeld;
-	bool _rightTriggerHeld;
-	bool _alreadyFired = false;
-	GameObject _controllable;
-	
 	public ProjectileAction _projectileAction = ProjectileAction.THROW;
-	public ProjectileTriggerButton _projectileButton = ProjectileTriggerButton.LEFT;
 
+	//Rate of fire
+	public float _cooldown = 1;
+	float _cooldownTimer;
+
+	//Controller properties
+	public ProjectileTriggerButton _projectileButton = ProjectileTriggerButton.LEFT;
 	GamePad.Index _padIndex = GamePad.Index.One;
+	float _triggerThreshold = 0.20f;
+	DeftPlayerController _controller;
+
+	//Controllable Projectile
+	bool _alreadyFired = false;
+	GameObject _controlledTarget;
+	GameObject _controlledProjectile;
+	
 
 	// Use this for initialization
 	void Start () {
 		_cooldownTimer = _cooldown;
+		_controller = GameObject.FindGameObjectWithTag("Player").GetComponent<DeftPlayerController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		_cooldownTimer -= Time.deltaTime;
 
-		_leftTriggerHeld = (GamePad.GetTrigger (GamePad.Trigger.LeftTrigger, _padIndex) > _triggerThreshold);
-		_rightTriggerHeld = (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, _padIndex) > _triggerThreshold);
+		bool leftTriggerHeld = (GamePad.GetTrigger (GamePad.Trigger.LeftTrigger, _padIndex) > _triggerThreshold);
+		bool rightTriggerHeld = (GamePad.GetTrigger (GamePad.Trigger.RightTrigger, _padIndex) > _triggerThreshold);
 		if (_cooldownTimer <= 0.0f) 
 		{
-			if ( (_leftTriggerHeld && _projectileButton == ProjectileTriggerButton.RIGHT) 
-			|| (_rightTriggerHeld && _projectileButton == ProjectileTriggerButton.LEFT) )
+			//----FIRING----//
+			if ( (leftTriggerHeld && _projectileButton == ProjectileTriggerButton.RIGHT) 
+			|| (rightTriggerHeld && _projectileButton == ProjectileTriggerButton.LEFT) )
 			{
-				if (_projectileAction == ProjectileAction.THROW) {
+				switch(_projectileAction)
+				{
+				case ProjectileAction.THROW:
 					if(Network.isClient || Network.isServer){
 						networkView.RPC("LaunchProjectile", RPCMode.All, _offset, _magnitude, _makeChild);
 					}else{
 						LaunchProjectile(_offset, _magnitude, _makeChild);
 					}
-				} else if (_projectileAction == ProjectileAction.BEAM) {
+					break;
+
+				case ProjectileAction.BEAM:
 					if(Network.isClient || Network.isServer){
 						networkView.RPC("BeamAttack", RPCMode.All);
 					}else{
 						BeamAttack ();
 					}
-				} else if (_projectileAction == ProjectileAction.REMOTE_CTRL) {
+					break;
+
+				case ProjectileAction.REMOTE_CTRL:
 					if(!_alreadyFired){
-						LaunchControllable();
+						if(Network.isClient || Network.isServer){
+							networkView.RPC("LaunchControllable", RPCMode.All);
+						}else{
+							LaunchControllable ();
+						}
 						_alreadyFired = true;
-						// freeze the player, make this more efficientefficient? (i.e. don't use  findgameobject method)
-						GameObject.FindGameObjectWithTag("Player").GetComponent<DeftPlayerController>().enabled = false;
+						_controller.enabled = false; // freeze the player
+					}else{
+						if(_controlledProjectile){
+							if(Network.isClient || Network.isServer){
+								networkView.RPC("MoveControllable", RPCMode.All);
+							}else{
+								MoveControllable ();
+							}
+						}
 					}
-					// TODO: control the ball
+					break;
+
+				default: break;
 				}
 			_cooldownTimer = _cooldown;
 			}
-		}
-		// exited the remote control mode
-		if (!_leftTriggerHeld && _alreadyFired) {
-			_alreadyFired = false;
-			Destroy(_controllable, 0);
-			
-			// unfreeze player, make this more efficient? (i.e. don't use  findgameobject method)
-			GameObject.FindGameObjectWithTag("Player").GetComponent<DeftPlayerController>().enabled = true;
+			//----NOT FIRING----//
+			else{
+				switch(_projectileAction)
+				{
+				case ProjectileAction.THROW:
+
+					break;
+					
+				case ProjectileAction.BEAM:
+
+					break;
+					
+				case ProjectileAction.REMOTE_CTRL:
+					if ( _alreadyFired ) {
+						_alreadyFired = false;
+						if(_controlledProjectile){ Destroy(_controlledProjectile); }
+						if(_controlledTarget){ Destroy(_controlledTarget); }
+						_controller.enabled = true; // unfreeze the player
+					}
+					break;
+					
+				default: break;
+				}
+			}
 		}
 	}
 
@@ -106,7 +145,7 @@ public class fireProjectile: MonoBehaviour {
 		clone = Instantiate (_projectile, transform.position + _offset, transform.rotation) as GameObject;
 		//clone.rigidbody.velocity = transform.TransformDirection( trajectory * magnitude );
 
-		forward = Camera.main.transform.TransformDirection(Vector3.forward);
+		Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
 		forward = forward.normalized;
 		clone.rigidbody.velocity = (new Vector3(forward.x * _magnitude,0,forward.z * _magnitude));
 		
@@ -115,20 +154,45 @@ public class fireProjectile: MonoBehaviour {
 		}
 	}
 
+	[RPC]
 	void LaunchControllable(){
-		GameObject clone;
-		clone = Instantiate( _projectile, transform.position + _offset, transform.rotation ) as GameObject;
-		//clone.rigidbody.velocity = transform.TransformDirection( trajectory * magnitude );
-
-		_controllable = clone;
-		_controllable.GetComponent<TimedLifespan> ().enabled = false;
-		
-		forward = Camera.main.transform.TransformDirection(Vector3.forward);
-		forward = forward.normalized;
-		clone.rigidbody.velocity = (new Vector3(forward.x * _magnitude,0,forward.z * _magnitude));
-		
-		if( _makeChild ){
-			clone.transform.parent = this.transform;
+		RaycastHit hit;
+		float distance = 20;
+		if(Physics.Raycast(transform.position + _offset, this.transform.forward, out hit, distance)){
+			distance = hit.distance;
 		}
+		_controlledProjectile = Instantiate( _projectile, transform.position + _offset + (transform.forward*distance), transform.rotation ) as GameObject;
+		//_controlledProjectile.GetComponent<TimedLifespan> ().enabled = false;
+		_controlledTarget = Instantiate( _projectile, transform.position + _offset + (transform.forward*distance), transform.rotation ) as GameObject;
+		_controlledTarget.renderer.enabled = false;
+		_controlledTarget.transform.parent = Camera.main.transform;
+	}
+
+	[RPC]
+	void MoveControllable(){
+		_controller.controller_move_direction = Vector2.zero;
+		//Get controller direction
+		if (_controller.use_gamepad){
+			_controller.controller_move_direction = GamePad.GetAxis(GamePad.Axis.LeftStick, _padIndex);
+			_controller.controller_look_direction = GamePad.GetAxis(GamePad.Axis.RightStick, _padIndex);
+		}else{
+			_controller.controller_move_direction = new Vector2(Input.GetAxis("Horizontal"), -Input.GetAxis("Vertical"));
+			_controller.controller_look_direction = new Vector2(Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1), Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1));
+		}
+
+		// get forward direction
+		Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
+		forward = forward.normalized;
+		Vector3 move_direction = _controller.controller_move_direction.y * forward + _controller.controller_move_direction.x * new Vector3(forward.z, 0, -forward.x);
+
+		//Vector3 targetPosition = forward * Vector3.Distance(_controlledProjectile.transform.position, this.transform.position);
+		//apply movement
+		//_controlledProjectile.transform.position = targetPosition;//Vector3.Lerp(_controlledProjectile.transform.position, targetPosition + (move_direction*_magnitude), _drag);//.constantForce.force = move_direction * _magnitude;//new Vector3 (move_direction.x * _magnitude, 0, move_direction.z * _magnitude);//
+		//Debug.Log ("Forward:" + forward + "; myPosition:" + this.transform.position + "; projectilePosition" + _controlledProjectile.transform.position + "; lookDirection:" + _controller.controller_look_direction);
+		//Debug.Log("; targetPosition:" + targetPosition);
+		_controlledTarget.transform.position = _controlledTarget.transform.position + (_controlledTarget.transform.right * _controller.controller_move_direction.x * _magnitude) + (_controlledTarget.transform.forward * _controller.controller_move_direction.y * _magnitude);
+		_controlledProjectile.transform.position = Vector3.Lerp(_controlledProjectile.transform.position, _controlledTarget.transform.position, _drag * Time.deltaTime);
+		Debug.Log("targetPosition:" + _controlledTarget.transform.position);
+		Debug.Log("projectilePosition:" + _controlledProjectile.transform.position);
 	}
 }
