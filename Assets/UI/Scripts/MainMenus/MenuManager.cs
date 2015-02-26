@@ -7,6 +7,7 @@ public class MenuManager : MonoBehaviour {
 	public MainMenu2 CurrentMenu;
 
 	public void Start() {
+		Time.timeScale = 1;
 		ShowMenu (CurrentMenu);
 	}
 
