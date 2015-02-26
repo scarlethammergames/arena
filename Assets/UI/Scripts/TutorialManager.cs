@@ -7,14 +7,26 @@ public class TutorialManager : MonoBehaviour {
 
 	public GameObject eventSystemObject;
 	public GameObject tutorialStartButton;
-	public List<GameObject> tutorials;
+	public List<GameObject> syphenTutorials;
+	public List<GameObject> blitzTutorials;
 	private EventSystem eventSystem;
+	private List<GameObject> tutorials;
 
 	// Use this for initialization
 	void Start () {
-		eventSystem = eventSystemObject.GetComponent<EventSystem> ();
-		foreach (GameObject tut in tutorials) {
+		foreach (GameObject tut in syphenTutorials) {
 			tut.SetActive(false);
+		}
+		foreach (GameObject tut in blitzTutorials) {
+			tut.SetActive(false);
+		}
+		eventSystem = eventSystemObject.GetComponent<EventSystem> ();
+		GameObject syphen = GameObject.Find ("Syphen");
+		GameObject blitz = GameObject.Find ("Blitz");
+		if (syphen != null) {
+			tutorials = syphenTutorials;
+		} else {
+			tutorials = blitzTutorials;
 		}
 		//Start first tutorial panel
 		tutorials[0].SetActive (true);

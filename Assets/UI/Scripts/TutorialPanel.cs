@@ -16,13 +16,12 @@ public class TutorialPanel : MonoBehaviour {
 //		rect.sizeDelta = new Vector2 (width, height);
 
 		//Get and set arrow position
-		arrow = gameObject.transform.GetChild (1).GetComponent<RectTransform>();
-		arrow.sizeDelta = new Vector2(Screen.width*0.05f, Screen.width*0.05f);
-		arrow.anchoredPosition = new Vector2 (Screen.width * left, (Screen.height * top) + arrow.sizeDelta.y);
+//		arrow = gameObject.transform.GetChild (1).GetComponent<RectTransform>();
+//		if (arrow != null) {
+//			arrow.sizeDelta = new Vector2 (Screen.width * 0.05f, Screen.width * 0.05f);
+//			arrow.anchoredPosition = new Vector2 (Screen.width * left, (Screen.height * top) + arrow.sizeDelta.y);
+//		}
 
-		Debug.Log ("box anchor:" + rect.anchoredPosition);
-		Debug.Log ("box size:" + rect.sizeDelta);
-		Debug.Log ("arrow anchor:" + arrow.anchoredPosition);
 
 	}
 
